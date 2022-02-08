@@ -243,9 +243,10 @@
                       placeholder="請輸入說明內容"
                       v-model="tempProduct.recommend"
                     ></textarea>
-                    <label for="content" class="form-label">達人推薦</label>
+                    <label for="content" class="form-label">專家推薦</label>
                   </div>
                 </div>
+               
                 <div class="mb-3">
                   <div class="form-check">
                     <input
@@ -257,25 +258,15 @@
                       v-model="tempProduct.is_enabled"
                     />
                     <label class="form-check-label" for="is_enabled"
-                      >是否啟用</label
-                    >
+                      >是否啟用</label>
                   </div>
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="mb-3">
                   <label for="uploadImg" class="form-label">新增主圖</label>
-                  <input
-                    type="file"
-                    class="form-control"
-                    id="uploadImg"
-                    ref="pathClear"
-                    placeholder="請輸入圖片網址b"                    
-                    @change="upload('main',$event)"
-                  /><br />
-                  <img class="img-fluid" :src="tempProduct.imageUrl"/>
-                  <button class="btn btn-outline-danger btn-sm d-block w-100" v-if="tempProduct.imageUrl"
-                      @click="tempProduct.imageUrl=''" class="mb-3">刪除檔案</button>
+                  <input type="file" class="form-control mb-3" id="uploadImg" ref="pathClear" @change="upload('main',$event)"><img class="img-fluid" :src="tempProduct.imageUrl"/>
+                  <button class="btn btn-outline-danger btn-sm d-block w-100" v-if="tempProduct.imageUrl" @click="tempProduct.imageUrl=''" class="mb-3">刪除檔案</button>
                 </div>
                 <!-- 多圖設置 file選擇檔案 -->               
                 <div class="mb-3">
@@ -284,9 +275,7 @@
                     <input v-if="!tempProduct.imagesUrl.length || tempProduct.imagesUrl[tempProduct.imagesUrl.length-1] "
                         type="file"
                         class="form-control"
-                        id="uploadImgs"
-                        ref="pathesClear"
-                        placeholder="請輸入圖片網址"                    
+                        id="uploadImgs" ref="pathesClear"                                            
                         @change="upload('sub',$event)"
                         class="mb-3"
                     />

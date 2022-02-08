@@ -1,4 +1,5 @@
 import pagination from './component_pagination.js'
+
 let productModal = null;
 let delProductModal = null;
 const vm = Vue.createApp({
@@ -90,6 +91,7 @@ const vm = Vue.createApp({
 vm.component('productModal', {
     template: '#productModalId',
     props: ['tempProduct', 'isNew'],
+
     data() {
         return {
             apiUrl: 'https://vue3-course-api.hexschool.io/v2',
