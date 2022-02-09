@@ -30,6 +30,7 @@
             <tr>
               <th width="120">分類</th>
               <th>產品名稱</th>
+              <th width="150" class="text-center">專家星等</th>
               <th width="150" class="text-end px-5">原價</th>
               <th width="150" class="text-end px-5">售價</th>
               <th width="100">是否啟用</th>
@@ -41,6 +42,10 @@
             <tr v-for="item in products" :key="item.id">
               <td class="align-middle">{{item.category}}</td>
               <td class="align-middle">{{item.title}}</td>
+              <td class="align-middle" class="text-center"><label class="star-rating__star" v-for="(rating,index) in ratings" 
+                :class="{'is-selected': item.starNum >= rating,'is-disabled': disabled }">
+                <input class="star-rating star-rating__checkbox" type="radio" :value="rating" 
+                v-model="item.starNum" :disabled="true">★</label></td>
               <td class="text-end align-middle px-5">{{item.origin_price}}</td>
               <td class="text-end align-middle px-5">{{item.price}}</td>
               <td class="align-middle">
@@ -249,9 +254,8 @@
                <div class="mb-3"> 
                  <h6>專家評等：</h6>
                 <label class="star-rating__star" v-for="(rating,index) in ratings" 
-                :class="{'is-selected': ((tempValue >= rating) && tempValue != null),'is-disabled': disabled}" 
-                @click="set(index)">
-                <input class="star-rating star-rating__checkbox" type="radio" :value="tempProduct.starNum? tempProduct.starNum:rating" 
+                :class="{'is-selected': tempProduct.starNum >= rating,'is-disabled': disabled }">
+                <input class="star-rating star-rating__checkbox" type="radio" :value="rating" 
                 v-model="tempProduct.starNum" :disabled="disabled">★</label>
                 {{tempProduct.starNum}}
                </div>
@@ -274,7 +278,7 @@
                 <div class="mb-3">
                   <label for="uploadImg" class="form-label">新增主圖</label>
                   <input type="file" class="form-control mb-3" id="uploadImg" ref="pathClear" @change="upload('main',$event)"><img class="img-fluid" :src="tempProduct.imageUrl"/>
-                  <button class="btn btn-outline-danger btn-sm d-block w-100" v-if="tempProduct.imageUrl" @click="tempProduct.imageUrl=''" class="mb-3">刪除檔案</button>
+                  <button class="btn btn-outline-danger btn-sm d-block w-100" v-if="tempProduct.imageUrl" @click="tempProduct.imageUrl=''" >刪除檔案</button>
                 </div>
                 <!-- 多圖設置 file選擇檔案 -->               
                 <div class="mb-3">
@@ -282,15 +286,14 @@
                     <label for="uploadImgs" class="form-label">多圖設置</label>
                     <input v-if="!tempProduct.imagesUrl.length || tempProduct.imagesUrl[tempProduct.imagesUrl.length-1] "
                         type="file"
-                        class="form-control"
+                        class="form-control mb-3"
                         id="uploadImgs" ref="pathesClear"                                            
-                        @change="upload('sub',$event)"
-                        class="mb-3"
+                        @change="upload('sub',$event)"                        
                     />
                     <template v-for="(img,index) in tempProduct.imagesUrl" :key="index">
                       <img class="img-fluid" :src="tempProduct.imagesUrl[index]" />
-                      <button class="btn btn-outline-danger btn-sm d-block w-100"
-                      @click="tempProduct.imagesUrl.splice(index,1)" class="mb-3">刪除檔案</button>
+                      <button class="btn btn-outline-danger btn-sm d-block w-100 mb-3"
+                      @click="tempProduct.imagesUrl.splice(index,1)">刪除檔案</button>
                     </template>
                   </div>
                   <div v-else>

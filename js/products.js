@@ -14,6 +14,7 @@ const vm = Vue.createApp({
             //isNew判斷是「新增產品」或「編輯產品」
             isNew: false,
             pagination: {},
+            ratings: [1, 2, 3, 4, 5],
             // delItemId: '',
             apiUrl: 'https://vue3-course-api.hexschool.io/v2',
             path: 'popeye',
@@ -29,7 +30,7 @@ const vm = Vue.createApp({
             // this.url要加上，不然沒有cookie的時候，不會導向登入頁面
             axios.post(`${this.apiUrl}/api/user/check`)
                 .then((res) => {
-                    console.log(res.data);
+                    // console.log(res.data);
                     this.getProducts();
                 }).catch((err) => {
                     console.log(err);
@@ -45,7 +46,7 @@ const vm = Vue.createApp({
                 .then(res => {
                     this.products = res.data.products;
                     this.pagination = res.data.pagination;
-                    console.log(this.products);
+                    // console.log(this.products);
                 })
                 .catch(err => {
                     console.dir(err);
@@ -99,8 +100,8 @@ vm.component('productModal', {
             apiUrl: 'https://vue3-course-api.hexschool.io/v2',
             path: 'popeye',
             modal: null,
-            tempValue: this.tempProduct.starNum,
-            ratings: [1, 2, 3, 4, 5]
+            ratings: [1, 2, 3, 4, 5],
+            disabled: false,
         }
     },
     mounted() {
@@ -108,7 +109,6 @@ vm.component('productModal', {
             keyboard: false,
             backdrop: 'static'
         });
-        this.set(this.tempProduct.starNum);
     },
     methods: {
         updateProduct() {
@@ -156,12 +156,12 @@ vm.component('productModal', {
                     console.log(err);
                 })
         },
-        set(index) {
-            if (!this.disabled) {
-                this.tempValue = index + 1;
-                console.log(this.tempProduct.starNum);
-            }
-        },
+        // set(index) {
+        //     if (!this.disabled) {
+        //         this.tempValue = index + 1;
+        //         console.log(this.tempProduct.starNum);
+        //     }
+        // },
         // createImages() {
         //     this.tempProduct.imagesUrl = [];
         //     this.tempProduct.imagesUrl.push('');
