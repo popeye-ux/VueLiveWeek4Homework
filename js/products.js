@@ -1,5 +1,6 @@
 import pagination from './component_pagination.js'
 
+
 let productModal = null;
 let delProductModal = null;
 const vm = Vue.createApp({
@@ -21,6 +22,7 @@ const vm = Vue.createApp({
     components: {
         pagination,
     },
+
     methods: {
         //確認是否登入
         checkLogin() {
@@ -56,6 +58,7 @@ const vm = Vue.createApp({
             if (newEditDel === 'new') {
                 this.tempProduct = {
                     imagesUrl: [],
+                    starNum: 0,
                 };
                 this.isNew = true;
                 productModal.show();
@@ -91,12 +94,13 @@ const vm = Vue.createApp({
 vm.component('productModal', {
     template: '#productModalId',
     props: ['tempProduct', 'isNew'],
-
     data() {
         return {
             apiUrl: 'https://vue3-course-api.hexschool.io/v2',
             path: 'popeye',
             modal: null,
+            tempValue: this.tempProduct.starNum,
+            ratings: [1, 2, 3, 4, 5]
         }
     },
     mounted() {
@@ -104,17 +108,16 @@ vm.component('productModal', {
             keyboard: false,
             backdrop: 'static'
         });
+        this.set(this.tempProduct.starNum);
     },
     methods: {
         updateProduct() {
             let url = `${this.apiUrl}/api/${this.path}/admin/product`;
             let http = 'post';
-
             if (!this.isNew) {
                 url = `${this.apiUrl}/api/${this.path}/admin/product/${this.tempProduct.id}`;
                 http = 'put'
             }
-
             axios[http](url, { data: this.tempProduct })
                 .then((response) => {
                     alert(response.data.message);
@@ -127,9 +130,9 @@ vm.component('productModal', {
                 })
         },
         upload(isMain, event) {
-            console.dir(event);
+            // console.dir(event);
             let file = event.target.files[0];
-            console.log(file);
+            // console.log(file);
             const formData = new FormData();
             formData.append('file-to-upload', file);
             axios.post(`${this.apiUrl}/api/${this.path}/admin/upload`, formData)
@@ -153,10 +156,16 @@ vm.component('productModal', {
                     console.log(err);
                 })
         },
-        createImages() {
-            this.tempProduct.imagesUrl = [];
-            this.tempProduct.imagesUrl.push('');
+        set(index) {
+            if (!this.disabled) {
+                this.tempValue = index + 1;
+                console.log(this.tempProduct.starNum);
+            }
         },
+        // createImages() {
+        //     this.tempProduct.imagesUrl = [];
+        //     this.tempProduct.imagesUrl.push('');
+        // },
         // openModal() {
         //     productModal.show();
         // },
