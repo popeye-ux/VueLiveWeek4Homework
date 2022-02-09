@@ -252,12 +252,11 @@
                   </div>
                 </div>
                <div class="mb-3"> 
-                 <h6>專家評等：</h6>
+                 <h6>專家評等： {{tempProduct.starNum}} 顆星</h6>
                 <label class="star-rating__star" v-for="(rating,index) in ratings" 
                 :class="{'is-selected': tempProduct.starNum >= rating,'is-disabled': disabled }">
                 <input class="star-rating star-rating__checkbox" type="radio" :value="rating" 
-                v-model="tempProduct.starNum" :disabled="disabled">★</label>
-                {{tempProduct.starNum}}
+                v-model="tempProduct.starNum" :disabled="disabled">★</label>                
                </div>
                 <div class="mb-3">
                   <div class="form-check">

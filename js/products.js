@@ -15,6 +15,8 @@ const vm = Vue.createApp({
             isNew: false,
             pagination: {},
             ratings: [1, 2, 3, 4, 5],
+            // disabled 控制app表格的星星可不可以點
+            disabled: "true",
             // delItemId: '',
             apiUrl: 'https://vue3-course-api.hexschool.io/v2',
             path: 'popeye',
@@ -66,7 +68,7 @@ const vm = Vue.createApp({
                 // 點擊「修改產品」，帶入的參數為 edit
             } else if (newEditDel === 'edit') {
                 this.tempProduct = { ...item };
-                console.log(this.tempProduct.id);
+                // console.log(this.tempProduct.id);
                 //if (!this.isNew) 使用put方法
                 this.isNew = false;
                 productModal.show();
@@ -101,6 +103,7 @@ vm.component('productModal', {
             path: 'popeye',
             modal: null,
             ratings: [1, 2, 3, 4, 5],
+            // disabled 控制modal的星星可不可以點
             disabled: false,
         }
     },
